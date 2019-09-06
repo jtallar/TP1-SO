@@ -16,13 +16,13 @@
 int main(int argc, char *argv[]) {
     int i;
     int slave[SLAVE_NUMBER];
-    int fd = shm_open("/memory", O_CREAT | O_RDWR, 0777);
+    int fd = shm_open("/memory", O_CREAT | O_RDWR, 0666);
     if (fd < 0){
         perror("Error en el open");
         return 1;
     }
     if (ftruncate(fd, BUFF_SIZE) != 0){
-        perror("Error en el ftruncate: ");
+        perror("Error en el ftruncate");
         return 1;
     }
     void * var = mmap(NULL, BUFF_SIZE, PROT_WRITE | PROT_READ, MAP_SHARED, fd, 0);
@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
     char * buf = (char *) var;
     *buf = 0;
     
-    sem_t * sem_app = sem_open(SEM_APP_NAME, O_CREAT, 0777, 1);
+    sem_t * sem_app = sem_open(SEM_APP_NAME, O_CREAT, 0666, 1);
     if (sem_app == SEM_FAILED){
         perror("Error en el sem_open");
         return 1;
     }
 
-    sem_t * sem_slave = sem_open(SEM_SLAVE_NAME, O_CREAT, 0777, 0);
+    sem_t * sem_slave = sem_open(SEM_SLAVE_NAME, O_CREAT, 0666, 0);
     if (sem_slave == SEM_FAILED){
         perror("Error en el sem_open");
         return 1;
@@ -64,6 +64,7 @@ int main(int argc, char *argv[]) {
 
     while (proccesed_files < FILE_QTY + 1){
         sem_wait(sem_app);
+        // Recibir archivo
         // Mandar archivo
         sem_post(sem_slave);
         proccesed_files++;
