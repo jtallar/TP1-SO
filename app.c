@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 			perror("Error de fork");    		
 			return 1;
     	} else if (slave[i] == 0){
-            char *args[1] = {NULL};
+            char *args[] = {NULL};
     		execv("slave", args);
 	        perror("Error de execv de app");
 	        return 1;
@@ -60,14 +60,14 @@ int main(int argc, char *argv[]) {
     	}
     }
 
-    int proccesed_files = 0;
+    int processed_files = 0;
 
-    while (proccesed_files < FILE_QTY + 1){
+    while (processed_files < FILE_QTY + 1){
         sem_wait(sem_app);
         // Recibir archivo
         // Mandar archivo
         sem_post(sem_slave);
-        proccesed_files++;
+        processed_files++;
     }
 
     for (i = 0; i < SLAVE_NUMBER; i++){
