@@ -13,7 +13,7 @@
 #define SEM_APP_TO_SLAVE_NAME   "/sem_app_slave"
 #define SEM_SLAVE_TO_APP_NAME   "/sem_slave_app"
 
-#define MAX_LENGTH  50
+#define CHUNK_SIZE      65
 
 int main(int argc, char *argv[]) {
     /* Apertura de Memoria Compartida */
@@ -53,32 +53,44 @@ int main(int argc, char *argv[]) {
         perror("Error en el sem_open");
         return 1;
     }
-
+    char out[CHUNK_SIZE];
     /* Ciclo de manejo de archivos */
     while(1) {
-        sem_wait(sem_slave);
+        //sem_wait(sem_slave);
         
+       // sem_wait(sem_app_to_slave);
+
         char * name = NULL;
         size_t namecap = 0;
         ssize_t length;
-        sem_wait(sem_app_to_slave);
         length = getline(&name, &namecap, stdin);
-        if (length < 0) {
+        if (length <= 0) {
             perror("Error en el getline");
             return 1;
         }
+        if (name[0] == '?') {
+            printf("\nSaliendo de slave %d\n", getpid());
+            return 0;
+        }
         name[--length] = '\0';
-        sem_post(sem_app_to_slave);
+
+        // sem_post(sem_app_to_slave);
+
+        // printf("\n#PID: %d\tFILE: %s#\n\n", getpid(), name);
 
         int ret = fork();
         if (ret < 0){
             printf("Error en la creacion de fork\n");    		
             return 1;
         } else if (ret == 0){
-            char *args[] = {"minisat", name, NULL};
-            execv("/usr/bin/minisat", args);
-            perror("Error de execv de slave");	        
-            return 1;
+            // char *args[] = {"minisat", name, NULL};
+            // execv("/usr/bin/minisat", args);
+            // perror("Error de execv de slave");	        
+            // return 1;
+            sem_wait(sem_slave_to_app);
+            printf("%s\n%d\n%d\n%s\n%f\n%d\n", name, 145, 221, "UNSAT", 0.005, getppid());
+            sem_post(sem_slave_to_app);
+            return 0;
         } else {
             wait(NULL); // Espera a que termine el hijo
         }
@@ -88,6 +100,8 @@ int main(int argc, char *argv[]) {
     /* Cierre y salida */
     sem_close(sem_app);
     sem_close(sem_slave);
-    close(fd);
+    sem_close(sem_app_to_slave);
+    sem_close(sem_slave_to_app);
+    close(fd); 
     return 0;
 }
