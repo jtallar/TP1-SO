@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+// probanding si comitea
 
 #define SEM_APP_NAME    "/sem_app"
 #define SEM_SLAVE_NAME  "/sem_slave"
