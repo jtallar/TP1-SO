@@ -13,8 +13,8 @@
 #define STDIN			0
 #define STDOUT			1
 
-#define SEM_APP_NAME    "/sem_app"
-#define SEM_SLAVE_NAME  "/sem_slave"
+#define SEM_APP_NAME            "/sem_app"
+#define SEM_SLAVE_NAME          "/sem_slave"
 #define SEM_APP_TO_SLAVE_NAME   "/sem_app_slave"
 #define SEM_SLAVE_TO_APP_NAME   "/sem_slave_app"
 
