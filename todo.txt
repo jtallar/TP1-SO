@@ -1,11 +1,8 @@
 APP
-	DEBE guardar el resultado en el archivo resultado, aparezca el proceso de vista o no.
 	Ver como hacer unlink de semaforo y shared memory
-VISTA
-	Ver si vale imprimir en otro orden y con SATISFIABLE en vez de SAT (idem para UNSAT)
 
 GENERAL
-	Ver en el mmap que poner en los prot o fijarse en el ej1
+	Definir cantidad de archivos (buscar mas pesados) y de esclavos
 	Makefile
 	Valgrind
 	PVS-studio y cppcheck

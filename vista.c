@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         perror("Error en el shm_open de vista");
         return 1;
     }
-    void * var = mmap(NULL, FILE_NUMBER * CHUNK_SIZE, PROT_WRITE | PROT_READ, MAP_SHARED, fd, 0);
+    void * var = mmap(NULL, FILE_NUMBER * CHUNK_SIZE, PROT_READ, MAP_SHARED, fd, 0);
     if (var == MAP_FAILED){
         perror("Erorr en el mmap de vista");
         return 1;
