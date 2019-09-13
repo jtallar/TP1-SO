@@ -12,6 +12,8 @@
 #define SEM_BUFFER_NAME      "/sem_memory"
 #define EXIT_CAR        '?'
 
+const char *headers[] = {"Nombre del archivo: ", "Cantidad de variables: ", "Cantidad de clausulas: ", "Tiempo de procesamiento: ", "Resultado: ", "ID del slave: "};
+
 int main(int argc, char *argv[]) {
     /* Obtencion del codigo de la shared memory */
     char buf_name[10] = {0};
@@ -47,11 +49,16 @@ int main(int argc, char *argv[]) {
     }
     
     /* Lectura de buffer */
-    int index = 0;
+    int index = 0, header_index = 0;
     do {
         sem_wait(sem_buffer);
-        while (buffer[index] != '\0' && buffer[index] != EXIT_CAR)
-            putchar(buffer[index++]);
+        if (buffer[index] != EXIT_CAR){
+            printf("%s", headers[header_index % 6]);
+            header_index++;
+            while (buffer[index] != '\n' && buffer[index] != EXIT_CAR)
+                putchar(buffer[index++]);
+            putchar('\n');
+        }
     } while (buffer[index++] != EXIT_CAR);
 
     /* Cierre de archivos y salida */

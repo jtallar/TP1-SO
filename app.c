@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
                 int pipe_index = get_slave_index(slave, atoi(line));
                 if (pipe_index < 0)
                     return 1;
-                // printf("\n$APP File %s to Slave PID: %d de indice %d$\n", argv[arg_index], atoi(line), pipe_index);
+                // printf("\n\n$APP File %s to Slave PID: %d de indice %d$\n\n", argv[arg_index], atoi(line), pipe_index);
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
                 arg_index++;

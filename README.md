@@ -4,7 +4,7 @@ Para compilar y ejecutar:
 		gcc -Wall app.c -o app -lrt -pthread
 		gcc -Wall slave.c -o slave -lrt -pthread
 		gcc -Wall vista.c -o vista -lrt -pthread
-		./app
+		./app Prueba/* | ./vista
 
 Para Valgrind:
 		valgrind ./app
@@ -20,4 +20,6 @@ Con el codigo V... buscas ese error --> Para ver ejemplos y eso
 strace 	para detectar Busy Waiting --> Ver si se llama repetitivamente una syscall
 	para detectar donde estan los errores al llamar a una syscall
 	--> Ver como correrlo en Google
+
+How to make a makefile: http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
 
