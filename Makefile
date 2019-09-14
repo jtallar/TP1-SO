@@ -8,18 +8,22 @@ BIN := $(SRC:%.c=%)
 # Compiling required flags #
 CFLAGS = -Wall -g -lrt -pthread
 
-all: $(BIN)
+build: $(BIN)
 
 minisat:
 	@echo Checking for minisat.
 	@type minisat >/dev/null 2>&1 || apt-get install minisat
+
+run: minisat build
+	@echo Running program
+	@./app Prueba/* | ./vista
 
 %: %.c
 	@echo Compiling $< file...
 	@$(CC) $(CFLAGS) $< -o $@ 
 	@echo Binary file $@ generated.
 
-.PHONY: all minisat 
+.PHONY: build minisat run
 
 
 
