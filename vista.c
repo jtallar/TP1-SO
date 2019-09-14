@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     }
     void * var = mmap(NULL, FILE_NUMBER * CHUNK_SIZE, PROT_READ, MAP_SHARED, fd, 0);
     if (var == MAP_FAILED){
-        perror("Erorr en el mmap de vista");
+        perror("Error en el mmap de vista");
         return 1;
     }
     char * buffer = (char *) var;
