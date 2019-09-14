@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
     app_pid[--length] = '\0';
     sprintf(buf_name, "/mem-%s", app_pid);
 
+    // printf("Recibi: %s \t Escribo: %s\n", app_pid, buf_name);
     /* Apertura de la shared memory */
     int fd = shm_open(buf_name, O_RDWR, 0);
     if (fd < 0){
