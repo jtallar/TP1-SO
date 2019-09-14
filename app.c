@@ -20,7 +20,7 @@
 #define FILE_NUMBER     60
 
 #define CHUNK_LINES     6
-#define CHUNK_SIZE      65
+#define CHUNK_SIZE      90
 
 #define SEM_APP_NAME    "/sem_app"
 #define SEM_SLAVE_NAME  "/sem_slave"

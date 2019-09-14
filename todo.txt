@@ -1,5 +1,6 @@
 APP
 	Ver como hacer unlink de semaforo y shared memory --> Si ejecuto con pipe falla, si ejecuto por separado, no falla.
+	Cierro los extremos que no utiliza el hijo? Cierro todo al finalizar?
 
 GENERAL
 	Emprolijar codigo
