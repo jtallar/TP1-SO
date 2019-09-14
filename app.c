@@ -120,7 +120,6 @@ int main(int argc, char *argv[]) {
     		execv("slave", args);
 	        perror("Error de execv de app de app");
 	        return 1;
-    	} else {
     	}
     }
 
