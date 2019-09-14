@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
     int arg_index = 1, recieved_files = 0;
     int j = 0;
     for (i = 0; i < SLAVE_NUMBER; i++) {
-        for (j = 0; j < INIT_FILES; j++) {
+        for (j = 0; j < INIT_FILES && arg_index < argc; j++) {
             write(app_to_slave_fd[i][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
             write(app_to_slave_fd[i][WRITE_PIPE_END], new_line, 1);
             arg_index++;
@@ -195,8 +195,8 @@ int main(int argc, char *argv[]) {
     close(resultado_fd);
 
     sem_unlink(SEM_SLAVE_TO_APP_NAME);
-    // sem_unlink(SEM_BUFFER_NAME);
-    // shm_unlink(buf_name);
+    sem_unlink(SEM_BUFFER_NAME);
+    shm_unlink(buf_name);
     return 0;
 }
 
