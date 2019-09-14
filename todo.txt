@@ -1,9 +1,7 @@
 APP
-	Ver como hacer unlink de semaforo y shared memory
+	Ver como hacer unlink de semaforo y shared memory --> Si ejecuto con pipe falla, si ejecuto por separado, no falla.
 
 GENERAL
-	Corregir codigo para que chequee que sent = recieved antes de mandarle mas
-	Definir cantidad de archivos (buscar mas pesados) y de esclavos
 	Makefile
 	Valgrind
 	PVS-studio y cppcheck

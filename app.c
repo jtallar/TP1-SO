@@ -15,7 +15,7 @@
 
 #define SLAVE_NUMBER    3
 #define INIT_FILES      3
-#define FILE_NUMBER     41
+#define FILE_NUMBER     60
 
 #define CHUNK_LINES     6
 #define CHUNK_SIZE      65
@@ -171,6 +171,7 @@ int main(int argc, char *argv[]) {
         }
         free(line);
     }
+    fclose(stream);
 
     /* Avisarles a los slaves que terminen */
     for (i = 0; i < SLAVE_NUMBER; i++) {

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -8,7 +9,7 @@
 #include <string.h>
 
 #define CHUNK_SIZE      65
-#define FILE_NUMBER     41
+#define FILE_NUMBER     60
 #define SEM_BUFFER_NAME      "/sem_memory"
 #define EXIT_CAR        '?'
 
@@ -40,6 +41,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     char * buffer = (char *) var;
+    free(app_pid);
 
     /* Apertura del semaforo */
     sem_t * sem_buffer = sem_open(SEM_BUFFER_NAME, 0);

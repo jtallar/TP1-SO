@@ -1,13 +1,14 @@
 # TP1-SO
 Para compilar y ejecutar:
 		apt-get install minisat
-		gcc -Wall app.c -o app -lrt -pthread
-		gcc -Wall slave.c -o slave -lrt -pthread
-		gcc -Wall vista.c -o vista -lrt -pthread
+		gcc -Wall -g app.c -o app -lrt -pthread
+		gcc -Wall -g slave.c -o slave -lrt -pthread
+		gcc -Wall -g vista.c -o vista -lrt -pthread
 		./app Prueba/* | ./vista
 
 Para Valgrind:
-		valgrind ./app
+		apt-get update		
+		valgrind ./app Prueba/* | ./vista
 
 Si complico con gcc -g, me genera mas info en el ejecutable que permite que valgrind tenga mas precision.
 
