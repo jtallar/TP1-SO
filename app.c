@@ -15,7 +15,7 @@
 
 #define SLAVE_NUMBER    3
 #define INIT_FILES      3
-#define FILE_NUMBER     28
+#define FILE_NUMBER     41
 
 #define CHUNK_LINES     6
 #define CHUNK_SIZE      65
@@ -29,6 +29,9 @@
 #define READ_PIPE_END	0
 #define WRITE_PIPE_END	1
 
+#define RECIEVED_FILE	0
+#define SENT_FILE	    1
+
 #define EXIT_CAR        '?'
 
 static char new_line[] = {'\n'};
@@ -39,6 +42,7 @@ int get_slave_index(int * slaves, int pid);
 int main(int argc, char *argv[]) {
     int i;
     int slave[SLAVE_NUMBER];
+    int processed_files[SLAVE_NUMBER][2] = {{0}, {0}};
 
     if (argc < 2) {
         perror("Error en el ingreso de args de app");
@@ -126,6 +130,7 @@ int main(int argc, char *argv[]) {
             write(app_to_slave_fd[i][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
             write(app_to_slave_fd[i][WRITE_PIPE_END], new_line, 1);
             arg_index++;
+            processed_files[i][SENT_FILE]++;
         }
     }
 
@@ -152,14 +157,16 @@ int main(int argc, char *argv[]) {
         if (line_count == CHUNK_LINES) {
             recieved_files++;
             line_count = 0;
-            if (arg_index < argc) {
+            int pipe_index = get_slave_index(slave, atoi(line));
+            if (pipe_index < 0)
+                return 1;
+            processed_files[pipe_index][RECIEVED_FILE]++;
+            if (arg_index < argc && processed_files[pipe_index][SENT_FILE] == processed_files[pipe_index][RECIEVED_FILE]) {
                 /* Envio de archivo */
-                int pipe_index = get_slave_index(slave, atoi(line));
-                if (pipe_index < 0)
-                    return 1;
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
                 arg_index++;
+                processed_files[pipe_index][SENT_FILE]++;
             }
         }
         free(line);

@@ -2,6 +2,7 @@ APP
 	Ver como hacer unlink de semaforo y shared memory
 
 GENERAL
+	Corregir codigo para que chequee que sent = recieved antes de mandarle mas
 	Definir cantidad de archivos (buscar mas pesados) y de esclavos
 	Makefile
 	Valgrind

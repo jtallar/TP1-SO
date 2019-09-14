@@ -8,11 +8,11 @@
 #include <string.h>
 
 #define CHUNK_SIZE      65
-#define FILE_NUMBER     28
+#define FILE_NUMBER     41
 #define SEM_BUFFER_NAME      "/sem_memory"
 #define EXIT_CAR        '?'
 
-const char *headers[] = {"Nombre del archivo: ", "Cantidad de variables: ", "Cantidad de clausulas: ", "Tiempo de procesamiento: ", "Resultado: ", "ID del slave: "};
+const char *headers[] = {"\nNombre del archivo: ", "Cantidad de variables: ", "Cantidad de clausulas: ", "Tiempo de procesamiento: ", "Resultado: ", "ID del slave: "};
 
 int main(int argc, char *argv[]) {
     /* Obtencion del codigo de la shared memory */
