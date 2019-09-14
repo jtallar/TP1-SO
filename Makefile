@@ -2,15 +2,24 @@
 
 CC = gcc
 # Collects all source files un cwd #
-SRC = $(wildcard *.c)
-# Group of the binaries #
-BINS = $(SRC:%.c=%)
+SRC := $(wildcard *.c)
+# Group of the binary objects #
+BIN := $(SRC:%.c=%)
 # Compiling required flags #
 CFLAGS = -Wall -g -lrt -pthread
 
-all: $(BINS)
+all: $(BIN)
+
+minisat:
+	@echo Checking for minisat.
+	@type minisat >/dev/null 2>&1 || apt-get install minisat
 
 %: %.c
-	@$(CC) $(CFLAGS) $< -o $@
+	@echo Compiling $< file...
+	@$(CC) $(CFLAGS) $< -o $@ 
+	@echo Binary file $@ generated.
 
-.PHONY: all
+.PHONY: all minisat 
+
+
+
