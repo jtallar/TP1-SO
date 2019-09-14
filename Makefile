@@ -1,6 +1,16 @@
 # TP1-SO
-tp1: app.c slave.c vista.c
-	gcc -Wall -g app.c -o app -lrt -pthread
-	gcc -Wall -g slave.c -o slave -lrt -pthread
-	gcc -Wall -g vista.c -o vista -lrt -pthread
 
+CC = gcc
+# Collects all source files un cwd #
+SRC = $(wildcard *.c)
+# Group of the binaries #
+BINS = $(SRC:%.c=%)
+# Compiling required flags #
+CFLAGS = -Wall -g -lrt -pthread
+
+all: $(BINS)
+
+%: %.c
+	@$(CC) $(CFLAGS) $< -o $@
+
+.PHONY: all
