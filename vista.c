@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-#define CHUNK_SIZE      65
+#define CHUNK_SIZE      90
 #define FILE_NUMBER     60
 #define SEM_BUFFER_NAME      "/sem_memory"
 #define EXIT_CAR        '?'

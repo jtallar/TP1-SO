@@ -20,8 +20,8 @@
 #define SEM_APP_TO_SLAVE_NAME   "/sem_app_slave"
 #define SEM_SLAVE_TO_APP_NAME   "/sem_slave_app"
 
-#define CHUNK_SIZE      65
-#define CMD_LENGTH      170
+#define CHUNK_SIZE      90
+#define CMD_LENGTH      175
 
 int main(int argc, char *argv[]) {
     int salir = 1;
