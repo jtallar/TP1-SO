@@ -8,7 +8,7 @@ Para compilar y ejecutar:
 
 Para Valgrind:
 		apt-get update		
-		valgrind ./app Prueba/* | ./vista
+		valgrind --leak-check=full --show-leak-kinds=all ./app Prueba/* | ./vista
 
 Si complico con gcc -g, me genera mas info en el ejecutable que permite que valgrind tenga mas precision.
 

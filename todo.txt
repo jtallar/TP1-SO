@@ -2,7 +2,9 @@ APP
 	Ver como hacer unlink de semaforo y shared memory --> Si ejecuto con pipe falla, si ejecuto por separado, no falla.
 
 GENERAL
+	Emprolijar codigo
 	Makefile
-	Valgrind
-	PVS-studio y cppcheck
+	Valgrind	--> OK
+	PVS-studio	--> Un error, pero controlado
+	Cppcheck	--> NO FUNCA!!!
 	INFORME

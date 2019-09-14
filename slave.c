@@ -1,3 +1,5 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,7 +48,11 @@ int main(int argc, char *argv[]) {
             name[--length] = '\0';
     
             /* Ejecucion de minisat con parseo de salida */
-            sprintf(cmd_buf, "minisat %s | awk '{if(/Number of clauses/){print $5} if(/Number of variables/){print $5} if(/CPU time/) {print $4} if(/SAT/) {print $1}}'", name);
+            length = snprintf(cmd_buf, CMD_LENGTH, "minisat %s | awk '{if(/Number of clauses/){print $5} if(/Number of variables/){print $5} if(/CPU time/) {print $4} if(/SAT/) {print $1}}'", name);
+            if (length < 0 || length >= CMD_LENGTH) {
+                perror("Error en el snprintf de slave");
+                return 1;
+            }
             FILE *fp = popen(cmd_buf,"r");
             if (fp == NULL) {
                 perror("Error en el popen de slave");
@@ -55,6 +61,10 @@ int main(int argc, char *argv[]) {
 
             /* Armado de string de informacion del procesamiento */
             char * out = malloc(CHUNK_SIZE);
+            if (out == NULL) {
+                perror("Error en el malloc de slave");
+                return 1;
+            }
             char * beg = out;
             out = stpcpy(out, name);
             *out = '\n'; 
