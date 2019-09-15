@@ -163,23 +163,25 @@ int main(int argc, char *argv[]) {
             if (pipe_index < 0)
                 return 1;
             processed_files[pipe_index][RECIEVED_FILE]++;
-            if (arg_index < argc && processed_files[pipe_index][SENT_FILE] == processed_files[pipe_index][RECIEVED_FILE]) {
-                /* Envio de archivo */
-                write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
+            if (arg_index < argc) {
+                /* Quedan archivos por procesar */
+                if (processed_files[pipe_index][SENT_FILE] == processed_files[pipe_index][RECIEVED_FILE]) {
+                    /* Envio de archivo */
+                    write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
+                    write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
+                    arg_index++;
+                    processed_files[pipe_index][SENT_FILE]++;
+                }
+            } else {
+                /* No quedan archivos, avisarle al slave que termine */
+                write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], exit_line, 1);
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
-                arg_index++;
-                processed_files[pipe_index][SENT_FILE]++;
             }
         }
         free(line);
     }
     fclose(stream);
 
-    /* Avisarles a los slaves que terminen */
-    for (i = 0; i < SLAVE_NUMBER; i++) {
-        write(app_to_slave_fd[i][WRITE_PIPE_END], exit_line, 1);
-        write(app_to_slave_fd[i][WRITE_PIPE_END], new_line, 1);
-    }
     /* Avisarle a vista que no hay mas lineas */
     buffer = stpcpy(buffer, exit_line);
     sem_post(sem_buffer);
@@ -194,6 +196,13 @@ int main(int argc, char *argv[]) {
     sem_close(sem_buffer);
     close(shm_fd);
     close(resultado_fd);
+
+    close(slave_to_app_fd[READ_PIPE_END]);
+    close(slave_to_app_fd[WRITE_PIPE_END]);
+    for (i = 0; i < SLAVE_NUMBER; i++) {
+        close(app_to_slave_fd[i][READ_PIPE_END]);
+        close(app_to_slave_fd[i][WRITE_PIPE_END]);
+    }
 
     sem_unlink(SEM_SLAVE_TO_APP_NAME);
     sem_unlink(SEM_BUFFER_NAME);
