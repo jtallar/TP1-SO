@@ -103,6 +103,7 @@ int main(int argc, char *argv[]) {
 
     /* Envio del pid a STDOUT para vista */
     printf("%d\n", getpid());
+    fflush(stdout);
     sleep(2);
 
     /* Creacion de Esclavos */
