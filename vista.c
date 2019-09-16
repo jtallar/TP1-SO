@@ -11,7 +11,7 @@
 #include <string.h>
 
 #define CHUNK_SIZE      90
-#define FILE_NUMBER     60
+#define FILE_NUMBER     600
 #define SEM_BUFFER_NAME      "/sem_memory"
 #define EXIT_CAR        '?'
 

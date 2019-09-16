@@ -17,7 +17,7 @@
 
 #define SLAVE_NUMBER    3
 #define INIT_FILES      3
-#define FILE_NUMBER     60
+#define FILE_NUMBER     600
 
 #define CHUNK_LINES     6
 #define CHUNK_SIZE      90
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
         perror("Error en el ftruncate de app");
         return 1;
     }
-    void * var = mmap(NULL, CHUNK_SIZE * argc, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    void * var = mmap(NULL, CHUNK_SIZE * FILE_NUMBER, PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (var == MAP_FAILED){
         perror("Error en el mmap de app");
         return 1;
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
             close(STDIN);
             dup2(app_to_slave_fd[i][READ_PIPE_END], STDIN);
             char *args[] = {NULL};
-    		execv("slave", args);
+    		execv("/root/TP1-SO/slave", args);
 	        perror("Error de execv de app de app");
 	        return 1;
     	}

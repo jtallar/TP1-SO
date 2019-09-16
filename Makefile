@@ -14,7 +14,7 @@ minisat:
 	@echo Checking for minisat.
 	@type minisat >/dev/null 2>&1 || apt-get install minisat
 
-run: minisat build
+run:
 	@echo Running program
 	@./app Prueba/* | ./vista
 
