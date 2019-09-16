@@ -20,6 +20,9 @@
 #define CHUNK_SIZE      90
 #define CMD_LENGTH      175
 
+#define EXIT_CAR        '?'
+
+
 int main(int argc, char *argv[]) {
     int salir = 1;
     sem_t * sem_slave_to_app = sem_open(SEM_SLAVE_TO_APP_NAME, 0);
@@ -41,7 +44,7 @@ int main(int argc, char *argv[]) {
             free(name);
             return 1;
         }
-        if (name[0] != '?') {
+        if (name[0] != EXIT_CAR) {
             name[--length] = '\0';
     
             /* Ejecucion de minisat con parseo de salida */
