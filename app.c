@@ -22,9 +22,6 @@
 #define CHUNK_LINES     6
 #define CHUNK_SIZE      90
 
-#define SEM_APP_NAME    "/sem_app"
-#define SEM_SLAVE_NAME  "/sem_slave"
-#define SEM_APP_TO_SLAVE_NAME   "/sem_app_slave"
 #define SEM_SLAVE_TO_APP_NAME   "/sem_slave_app"
 #define SEM_BUFFER_NAME "/sem_memory"
 
@@ -66,7 +63,6 @@ int main(int argc, char *argv[]) {
         perror("Error en el ftruncate de app");
         return 1;
     }
-    // Revisar que onda los PROT ACA
     void * var = mmap(NULL, CHUNK_SIZE * argc, PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (var == MAP_FAILED){
         perror("Error en el mmap de app");

@@ -1,2 +1,2 @@
 www.viva64.com/en/w	1	err	Help: The documentation for all analyzer warnings is available here: https://www.viva64.com/en/w/.
-/root/TP1-SO/slave.c	56	err	V1010 Unchecked tainted data is used in the first argument: 'cmd_buf'. Check lines: 56, 51.
+/root/TP1-SO/slave.c	53	err	V1010 Unchecked tainted data is used in the first argument: 'cmd_buf'. Check lines: 53, 48.
