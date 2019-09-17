@@ -1,6 +1,0 @@
-GENERAL
-	Emprolijar codigo
-	Makefile
-	PVS-studio	--> Un error, pero controlado
-	Cppcheck	--> NO FUNCA!!!
-	INFORME
