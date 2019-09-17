@@ -23,7 +23,7 @@
 #define CHUNK_SIZE      90
 
 #define SEM_SLAVE_TO_APP_NAME   "/sem_slave_app"
-#define SEM_BUFFER_NAME "/sem_memory"
+#define SEM_BUFFER_NAME         "/sem_memory"
 
 #define READ_PIPE_END	0
 #define WRITE_PIPE_END	1
@@ -41,7 +41,7 @@ int get_slave_index(int * slaves, int pid);
 int main(int argc, char *argv[]) {
     int i;
     int slave[SLAVE_NUMBER];
-    int processed_files[SLAVE_NUMBER][2] = {{0}, {0}};
+    int processed_files[SLAVE_NUMBER][2] = {{0}};
 
     if (argc < 2) {
         perror("Error en el ingreso de args de app");
@@ -114,8 +114,8 @@ int main(int argc, char *argv[]) {
             close(STDIN);
             dup2(app_to_slave_fd[i][READ_PIPE_END], STDIN);
             char *args[] = {NULL};
-    		execv("/root/TP1-SO/slave", args);
-	        perror("Error de execv de app de app");
+    		execv("./slave", args);
+	        perror("Error de execv de app");
 	        return 1;
     	}
     }
@@ -159,24 +159,23 @@ int main(int argc, char *argv[]) {
             if (pipe_index < 0)
                 return 1;
             processed_files[pipe_index][RECIEVED_FILE]++;
-            if (arg_index < argc) {
-                /* Quedan archivos por procesar */
-                if (processed_files[pipe_index][SENT_FILE] == processed_files[pipe_index][RECIEVED_FILE]) {
-                    /* Envio de archivo */
-                    write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
-                    write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
-                    arg_index++;
-                    processed_files[pipe_index][SENT_FILE]++;
-                }
-            } else {
-                /* No quedan archivos, avisarle al slave que termine */
-                write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], exit_line, 1);
+            if (arg_index < argc && processed_files[pipe_index][SENT_FILE] == processed_files[pipe_index][RECIEVED_FILE]) {
+                /* Quedan archivos por procesar y esta libre el slave, envio archivo */
+                write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], argv[arg_index], strlen(argv[arg_index]));
                 write(app_to_slave_fd[pipe_index][WRITE_PIPE_END], new_line, 1);
+                arg_index++;
+                processed_files[pipe_index][SENT_FILE]++;
             }
         }
         free(line);
     }
     fclose(stream);
+
+    /* Avisarle a los esclavos que terminen */
+    for (i = 0; i < SLAVE_NUMBER; i++) {
+        write(app_to_slave_fd[i][WRITE_PIPE_END], exit_line, 1);
+        write(app_to_slave_fd[i][WRITE_PIPE_END], new_line, 1);
+    }
 
     /* Avisarle a vista que no hay mas lineas */
     buffer = stpcpy(buffer, exit_line);
